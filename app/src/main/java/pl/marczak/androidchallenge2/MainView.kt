@@ -6,4 +6,6 @@ interface MainView {
 
     fun showResult(message: String)
 
+    fun setCurrentInput(it: String)
+
 }

@@ -2,6 +2,8 @@ package pl.marczak.androidchallenge2
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -11,7 +13,10 @@ import pl.marczak.androidchallenge2.repository.CalculatorRepositoryImpl
 
 class MainActivity : AppCompatActivity(), MainView {
 
-    val presenter = MainPresenter(CalculatorRepositoryImpl())
+    companion object {
+        //todo: use dependency injection like koin or dagger2
+        val presenter = MainPresenter(CalculatorRepositoryImpl())
+    }
 
     lateinit var editText: EditText
     lateinit var resultTextView: TextView
@@ -26,19 +31,30 @@ class MainActivity : AppCompatActivity(), MainView {
         Symbol.values().map { symbol ->
             findViewById<Button>(symbol.res).setOnClickListener { _ ->
                 editText.setText(editText.text.toString() + symbol.symbol)
-                editText.setSelection(editText.text.length)
             }
         }
 
         findViewById<Button>(R.id.reset).setOnClickListener {
-            editText.setText("")
-            editText.setSelection(editText.text.length)
-            presenter.currentResult("")
+            presenter.clearResult()
         }
 
         findViewById<Button>(R.id.result).setOnClickListener {
             presenter.calculate(editText.text.toString())
         }
+
+        editText.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                editText.setSelection(editText.text.length)
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                presenter.currentInput = p0.toString()
+            }
+
+        })
 
         presenter.attachView(this)
     }
@@ -49,7 +65,11 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun showResult(message: String) {
         resultTextView.text = message
-
     }
+
+    override fun setCurrentInput(it: String) {
+        editText.setText(it)
+    }
+
 
 }

@@ -3,18 +3,26 @@ package pl.marczak.androidchallenge2
 import pl.marczak.androidchallenge2.model.MathResult
 import pl.marczak.androidchallenge2.repository.CalculatorRepository
 import java.math.BigDecimal
+import java.text.DecimalFormat
 
 class MainPresenter(val repository: CalculatorRepository) {
+
+    val decimalFormat = DecimalFormat("0.0000")
+
 
     var view: MainView? = null
 
     var currentResult: MathResult? = null
+    var currentInput: String? = null
 
     fun attachView(view: MainView?) {
         this.view = view
 
         currentResult?.let {
             renderResult(it)
+        }
+        currentInput?.let {
+            view?.setCurrentInput(it)
         }
     }
 
@@ -26,14 +34,17 @@ class MainPresenter(val repository: CalculatorRepository) {
     private fun renderResult(result: MathResult) {
         currentResult = result
         if (result.isOk) {
-            view?.showResult(result.value.toString())
+            view?.showResult(result.value!!.formatWell())
         } else {
             view?.showError(result.errorMessage.toString())
         }
     }
 
-    fun currentResult(value: String) {
-        val result = MathResult(BigDecimal(value), true, null)
-        renderResult(result)
+    fun BigDecimal.formatWell() = decimalFormat.format(this)
+
+    fun clearResult() {
+        currentResult = null
+        view?.setCurrentInput("")
+        view?.showResult("")
     }
 }
