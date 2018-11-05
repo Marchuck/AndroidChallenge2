@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true">
+
+    <Button
+        android:id="@+id/reset"
+        style="@style/operation_style"
+        android:text="C" />
+
+    <Button
+        android:id="@+id/substract"
+        style="@style/operation_style"
+        android:layout_toEndOf="@+id/reset"
+        android:layout_toRightOf="@+id/reset"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/multiply"
+        style="@style/operation_style"
+        android:layout_below="@+id/divide"
+        android:layout_toEndOf="@+id/add"
+        android:layout_toRightOf="@+id/add"
+        android:text="*" />
+
+    <Button
+        android:id="@+id/divide"
+        style="@style/operation_style"
+        android:layout_toEndOf="@+id/substract"
+        android:layout_toRightOf="@+id/substract"
+        android:text="/" />
+
+    <Button
+        android:id="@+id/add"
+        style="@style/operation_style"
+        android:layout_below="@+id/substract"
+        android:layout_toEndOf="@+id/reset"
+        android:layout_toRightOf="@+id/reset"
+        android:text="+" />
+
+    <Button
+        android:id="@+id/left_bracket"
+        style="@style/operation_style"
+        android:layout_below="@+id/add"
+        android:layout_toEndOf="@+id/reset"
+        android:layout_toRightOf="@+id/reset"
+        android:text="(" />
+
+    <Button
+        android:id="@+id/right_bracket"
+        style="@style/operation_style"
+        android:layout_below="@+id/add"
+        android:layout_toEndOf="@+id/left_bracket"
+        android:layout_toRightOf="@+id/left_bracket"
+        android:text=")" />
+
+    <Button
+        android:id="@+id/result"
+        style="@style/operation_style"
+        android:layout_below="@+id/reset"
+        android:text="=" />
+
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/divide"
+        android:layout_toRightOf="@+id/divide"
+        android:padding="30sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        tools:text="222" />
+
+    <EditText
+        android:id="@+id/input_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/left_bracket"
+        android:background="#fff"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:padding="16sp"
+        android:text="0"
+        android:textColor="#000"
+        android:textSize="25sp"
+        tools:text="30000" />
+
+</RelativeLayout>
